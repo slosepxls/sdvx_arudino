@@ -1,4 +1,4 @@
-# Arduino SDVX EAcloud IO
+# Arduino SDVX EAcloud
 
 **English** | [한국어](README.md)
 
@@ -10,11 +10,11 @@ Rotary Encoders
 
 ## Features
 
-- ✅ **Konami USB VID/PID Spoofing** (`0x1ccf:0x101c`) - Native KONASTE recognition
-- ✅ **Dual Mode Operation**
+- **Konami USB VID/PID Spoofing** (`0x1ccf:0x101c`) - Native KONASTE recognition
+- **Dual Mode Operation**
   - **Mode 1 (HID)**: EAC Mode
   - **Mode 2 (Hybrid)**: HID Mode (Button - joystick, Knob - keyboard input)
-- ✅ **1000Hz Polling Rate**
+- **1000Hz Polling Rate**
 
 
 ## Pin Configuration (Modify to match your setup)
@@ -56,8 +56,8 @@ START button LED feedback on mode switch
 
 ### License
 
-MIT License - Feel free to modify and distribute!
+MIT License
 
 ### Credits
 
-Based on [CrazyRedMachine/SoundVoltexIO](https://github.com/CrazyRedMachine/SoundVoltexIO) for USB spoofing implementation.
+KONAMI IO [CrazyRedMachine/SoundVoltexIO](https://github.com/CrazyRedMachine/SoundVoltexIO)

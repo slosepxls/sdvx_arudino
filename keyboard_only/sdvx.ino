@@ -1,5 +1,4 @@
-/* 원본 코드 기반 - 노브 꾹 누르기 방식
- */
+// keyboard only mode
 
 #define BT_A 11
 #define BT_B 9
@@ -9,7 +8,7 @@
 #define FX_R 8
 #define BT_ST 10
 
-// 노브 키 설정
+// knob keys
 #define KNOB_L_CCW 'q'
 #define KNOB_L_CW 'w'
 #define KNOB_R_CCW 'o'
@@ -25,7 +24,7 @@ float knob2 = 0;
 float old_knob1 = 0;
 float old_knob2 = 0;
 
-// 노브 키 상태
+// knob key state
 bool knob1_pressing = false;
 bool knob2_pressing = false;
 char knob1_key = 0;
@@ -49,13 +48,13 @@ void loop() {
 
   // VOL-L
   if (knob1 != old_knob1) {
-    // 이전 키 떼기
+    // release prev key
     if (knob1_pressing) {
       Keyboard.release(knob1_key);
       knob1_pressing = false;
     }
 
-    // 새 키 누르기
+    // press new key
     if (knob1 < old_knob1) {
       knob1_key = KNOB_L_CCW;
     } else {
@@ -71,20 +70,20 @@ void loop() {
       old_knob1 = knob1;
     }
   } else if (knob1_pressing) {
-    // 노브 멈춤 - 키 떼기
+    // knob stopped
     Keyboard.release(knob1_key);
     knob1_pressing = false;
   }
 
   // VOL-R
   if (knob2 != old_knob2) {
-    // 이전 키 떼기
+    // release prev key
     if (knob2_pressing) {
       Keyboard.release(knob2_key);
       knob2_pressing = false;
     }
 
-    // 새 키 누르기
+    // press new key
     if (knob2 > old_knob2) {
       knob2_key = KNOB_R_CW;
     } else {
@@ -100,12 +99,12 @@ void loop() {
       old_knob2 = knob2;
     }
   } else if (knob2_pressing) {
-    // 노브 멈춤 - 키 떼기
+    // knob stopped
     Keyboard.release(knob2_key);
     knob2_pressing = false;
   }
 
-  // 버튼
+  // buttons
   if (digitalRead(BT_A) == LOW) {
     Keyboard.press('d');
   } else {

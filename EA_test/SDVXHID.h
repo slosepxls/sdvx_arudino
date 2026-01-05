@@ -1,6 +1,6 @@
 #include "HID.h"
 
-/* PINOUT - 사용자 하드웨어에 맞춤 */
+/* PINOUT - modify for your hardware */
 #define BUT_PIN_START 10
 #define BUT_PIN_A 11
 #define BUT_PIN_B 9
@@ -9,23 +9,23 @@
 #define BUT_PIN_FXL 6
 #define BUT_PIN_FXR 8
 
-// 엔코더 핀
+// encoder pins
 #define ENC_L_A 0
 #define ENC_L_B 1
 #define ENC_R_A 2
 #define ENC_R_B 3
 
 /* USER OPTIONS */
-#define REPORT_DELAY 1 // HID 리포트 딜레이 (ms)
+#define REPORT_DELAY 1 // HID report delay (ms)
 #define MILLIDEBOUNCE 5
 
-#define KONAMI_SPOOF 1 // Konami VID/PID 스푸핑 활성화
+#define KONAMI_SPOOF 1 // enable Konami VID/PID spoofing
 
 /* DO NOT EDIT BELOW */
 #define EPTYPE_DESCRIPTOR_SIZE uint8_t
 #define STRING_ID_Base 4
 
-// LED 기능 제거 (별도 기판 사용)
+// LED disabled (using custom PCB)
 #define NUM_BUT_LEDS 0
 #define SIDE_NUM_LEDS 0
 

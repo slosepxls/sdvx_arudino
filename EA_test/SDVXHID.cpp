@@ -1,6 +1,6 @@
 #include "SDVXHID.h"
 
-/* HID DESCRIPTOR - NEMSYS 호환 */
+/* HID DESCRIPTOR - NEMSYS compatible */
 static const byte PROGMEM _hidReportSDVX[] = {
     0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
     0x09, 0x04, // Usage (Joystick)
@@ -124,7 +124,7 @@ bool SDVXHID_::setup(USBSetup &setup) {
 }
 
 int SDVXHID_::sendState(uint32_t buttonsState, int32_t enc1, int32_t enc2) {
-  /* 엔코더 값 필터링 (작은 변화 무시) */
+  /* filter encoder values (ignore small changes) */
   static int32_t prev_enc1 = 0;
   static int32_t prev_enc2 = 0;
   int32_t delta1 = enc1 - prev_enc1;
@@ -138,12 +138,12 @@ int SDVXHID_::sendState(uint32_t buttonsState, int32_t enc1, int32_t enc2) {
   prev_enc1 = enc1;
   prev_enc2 = enc2;
 
-  /* HID 리포트 전송 */
+  /* send HID report */
   uint8_t data[5];
   data[0] = (uint8_t)4; // report id
   data[1] = (uint8_t)(buttonsState & 0xFF);
   data[2] = (uint8_t)(buttonsState >> 8) & 0xFF;
-  data[3] = (uint8_t)(enc1 >> 2 & 0xFF); // 10비트 → 8비트
+  data[3] = (uint8_t)(enc1 >> 2 & 0xFF); // 10bit -> 8bit
   data[4] = (uint8_t)(enc2 >> 2 & 0xFF);
 
   return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, 5);

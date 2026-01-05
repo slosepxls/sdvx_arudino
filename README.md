@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-# Arduino SDVX EAcloud IO
+# Arduino SDVX EAcloud
 
 [English](README.en.md) | **한국어**
 
@@ -11,11 +10,11 @@ Arduino Leonardo + IST SDVX PCB
 
 ## 주요 기능
 
-- ✅ **Konami USB VID/PID 스푸핑** (`0x1ccf:0x101c`) - 코나스테 네이티브 인식
-- ✅ **듀얼 모드**
+- **Konami USB VID/PID 스푸핑** (`0x1ccf:0x101c`) - 코나스테 네이티브 인식
+- **모드 변경**
   - **모드 1 (HID)**: EAC 모드
   - **모드 2 (하이브리드)**: HID 모드 (버튼 - 조이스틱, 노브 - 키보드)
-- ✅ **1000Hz 폴링**
+- **1000Hz 폴링**
 
 
 ## 핀 구성 (본인 환경에 맞게 수정)
@@ -55,13 +54,8 @@ Arduino Leonardo + IST SDVX PCB
 
 ### License
 
-MIT License - 자유롭게 수정 및 배포하세요!
+MIT License
 
 ### Credits
 
 KONAMI IO [CrazyRedMachine/SoundVoltexIO](https://github.com/CrazyRedMachine/SoundVoltexIO)
-=======
-Arduino Leonardo에서 진행
-
-EAcloud 네이티브 지원 목표로 개발중
->>>>>>> 858e2f4b5b4cd6da8a121abda32dea88c3773172

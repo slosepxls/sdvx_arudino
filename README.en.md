@@ -1,4 +1,4 @@
-# Arduino SDVX EAcloud (Testing Code)
+# Arduino SDVX EAcloud
 
 **English** | [한국어](README.md)
 
@@ -17,7 +17,7 @@ Rotary Encoders
 - **1000Hz Polling Rate**
 
 
-## Pin Configuration (Modify to match your setup)
+## Pin Configuration (Modify to match your setup config.h)
 
 ### Buttons
 | Button | Pin |

@@ -1,41 +1,30 @@
 #include "SDVXHID.h"
 
-/* HID DESCRIPTOR - NEMSYS compatible */
+/* HID DESCRIPTOR - Real Konami NEMSYS (16 buttons, 2 axes) */
 static const byte PROGMEM _hidReportSDVX[] = {
-    0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
+    0x05, 0x01, // Usage Page (Generic Desktop)
     0x09, 0x04, // Usage (Joystick)
     0xA1, 0x01, // Collection (Application)
-    0x85, 0x04, //   Report ID (4)
 
-    /* 9 buttons */
     0x05, 0x09, //   Usage Page (Button)
-    0x19, 0x01, //   Usage Minimum (0x01)
-    0x29, 0x09, //   Usage Maximum (0x09)
+    0x19, 0x01, //   Usage Minimum (Button 1)
+    0x29, 0x10, //   Usage Maximum (Button 16)
     0x15, 0x00, //   Logical Minimum (0)
     0x25, 0x01, //   Logical Maximum (1)
-    0x95, 0x09, //   Report Count (9)
+    0x95, 0x10, //   Report Count (16)
     0x75, 0x01, //   Report Size (1)
     0x81, 0x02, //   Input (Data,Var,Abs)
 
-    /* 7 bits padding */
-    0x95, 0x01, //   Report Count (1)
-    0x75, 0x07, //   Report Size (7)
-    0x81, 0x03, //   Input (Const,Var,Abs)
-
-    /* 2 knobs as analog axis (8-bit) */
-    0x05, 0x01,       //   Usage Page (Generic Desktop Ctrls)
-    0x09, 0x01,       //   Usage (Pointer)
+    0x05, 0x01,       //   Usage Page (Generic Desktop)
+    0x09, 0x30,       //   Usage (X)
+    0x09, 0x31,       //   Usage (Y)
     0x15, 0x00,       //   Logical Minimum (0)
     0x26, 0xFF, 0x00, //   Logical Maximum (255)
-    0x95, 0x02,       //   Report Count (2)
     0x75, 0x08,       //   Report Size (8)
-    0xA1, 0x00,       //   Collection (Physical)
-    0x09, 0x30,       //     Usage (X)
-    0x09, 0x31,       //     Usage (Y)
-    0x81, 0x02,       //     Input (Data,Var,Abs)
-    0xC0,             //   End Collection
+    0x95, 0x02,       //   Report Count (2)
+    0x81, 0x02,       //   Input (Data,Var,Abs)
 
-    0xC0 // End Collection (Joystick)
+    0xC0 // End Collection
 };
 
 #if KONAMI_SPOOF == 1
@@ -45,8 +34,8 @@ const DeviceDescriptor PROGMEM USB_DeviceDescriptorIAD =
 const char *const PROGMEM String_Manufacturer = "Konami Amusement";
 const char *const PROGMEM String_Product = "SOUND VOLTEX controller";
 #else
-const char *const PROGMEM String_Manufacturer = "CrazyRedMachine";
-const char *const PROGMEM String_Product = "SDVX Controller";
+const char *const PROGMEM String_Manufacturer = "Arduino";
+const char *const PROGMEM String_Product = "SDVX Test";
 #endif
 const char *const PROGMEM String_Serial = "SDVX";
 
@@ -123,30 +112,14 @@ bool SDVXHID_::setup(USBSetup &setup) {
   return false;
 }
 
-int SDVXHID_::sendState(uint32_t buttonsState, int32_t enc1, int32_t enc2) {
-  /* filter encoder values (ignore small changes) */
-  static int32_t prev_enc1 = 0;
-  static int32_t prev_enc2 = 0;
-  int32_t delta1 = enc1 - prev_enc1;
-  int32_t delta2 = enc2 - prev_enc2;
+int SDVXHID_::sendState(uint16_t buttonsState, uint8_t axis_x, uint8_t axis_y) {
+  uint8_t data[4];
+  data[0] = (uint8_t)(buttonsState & 0xFF);      // buttons 1-8
+  data[1] = (uint8_t)(buttonsState >> 8) & 0xFF; // buttons 9-16
+  data[2] = axis_x;                              // X axis (knob L)
+  data[3] = axis_y;                              // Y axis (knob R)
 
-  if (delta1 >= -15 && delta1 <= 15)
-    enc1 = prev_enc1;
-  if (delta2 >= -15 && delta2 <= 15)
-    enc2 = prev_enc2;
-
-  prev_enc1 = enc1;
-  prev_enc2 = enc2;
-
-  /* send HID report */
-  uint8_t data[5];
-  data[0] = (uint8_t)4; // report id
-  data[1] = (uint8_t)(buttonsState & 0xFF);
-  data[2] = (uint8_t)(buttonsState >> 8) & 0xFF;
-  data[3] = (uint8_t)(enc1 >> 2 & 0xFF); // 10bit -> 8bit
-  data[4] = (uint8_t)(enc2 >> 2 & 0xFF);
-
-  return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, 5);
+  return USB_Send(pluggedEndpoint | TRANSFER_RELEASE, data, 4);
 }
 
 SDVXHID_ SDVXHID;

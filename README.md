@@ -1,4 +1,4 @@
-# Arduino SDVX EAcloud (TESTING 작동안할수도있음!!!!!!!!!)
+# Arduino SDVX EAcloud
 
 [English](README.en.md) | **한국어**
 
@@ -17,7 +17,7 @@ Arduino Leonardo + IST SDVX PCB
 - **1000Hz 폴링**
 
 
-## 핀 구성 (본인 환경에 맞게 수정)
+## 핀 구성 (config.h 수정)
 
 ### 버튼
 | 버튼   | 핀  |
